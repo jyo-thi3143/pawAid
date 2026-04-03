@@ -21,4 +21,4 @@ A web app that helps low-income pet owners find affordable or free vet services.
 | DELETE | /api/vets/:id | Delete a listing |
 
 ## Author
-Your Name — CISC 3140, Brooklyn College, Spring 2026
+JYO — CISC 3140, Brooklyn College, Spring 2026
