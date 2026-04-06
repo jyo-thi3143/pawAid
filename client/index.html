@@ -1,9 +1,91 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>PawCare</title>
-  </head>
-  <body>
-    <h1>PawCare is coming soon 🐾</h1>
-  </body>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PawAid 🐾</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h1>🐾 PawAid</h1>
+    <p>Free and affordable vet services for low-income pet owners in NYC</p>
+  </header>
+
+  <!-- SEARCH AND FILTER BAR -->
+  <section class="filters">
+    <input
+      type="text"
+      id="zip-input"
+      placeholder="Search by zip code..."
+    />
+    <select id="service-select">
+      <option value="">All services</option>
+      <option value="vaccines">Vaccines</option>
+      <option value="spay">Spay</option>
+      <option value="neuter">Neuter</option>
+      <option value="checkup">Checkup</option>
+      <option value="dental">Dental</option>
+      <option value="emergency">Emergency</option>
+    </select>
+    <button id="search-btn">Search</button>
+    <button id="clear-btn">Clear</button>
+  </section>
+
+  <!-- VET LISTINGS -->
+  <section class="listings">
+    <div id="vet-container">
+      <!-- Vet cards will be injected here by app.js -->
+      <p id="loading-msg">Loading listings...</p>
+    </div>
+  </section>
+
+  <!-- SUBMIT A NEW LISTING FORM -->
+  <section class="submit-section">
+    <h2>Know a clinic we missed?</h2>
+    <p>Submit it here and we'll review it.</p>
+
+    <form id="submit-form">
+      <input type="text"     id="name"    placeholder="Clinic name *"    required />
+      <input type="text"     id="address" placeholder="Address *"        required />
+      <input type="text"     id="city"    placeholder="City *"           required />
+      <input type="text"     id="state"   placeholder="State (e.g. NY) *" required maxlength="2" />
+      <input type="text"     id="zip"     placeholder="ZIP code *"       required />
+      <input type="tel"      id="phone"   placeholder="Phone number *"   required />
+      <input type="url"      id="website" placeholder="Website (optional)" />
+      <input type="text"     id="notes"   placeholder="Notes (optional)" />
+
+      <label class="services-label">Services offered:</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" value="vaccines"  /> Vaccines</label>
+        <label><input type="checkbox" value="spay"      /> Spay</label>
+        <label><input type="checkbox" value="neuter"    /> Neuter</label>
+        <label><input type="checkbox" value="checkup"   /> Checkup</label>
+        <label><input type="checkbox" value="dental"    /> Dental</label>
+        <label><input type="checkbox" value="emergency" /> Emergency</label>
+      </div>
+
+      <label class="free-label">
+        <input type="checkbox" id="isFree" />
+        This clinic offers FREE services
+      </label>
+
+      <button type="submit">Submit Listing</button>
+    </form>
+
+    <p id="form-message"></p>
+  </section>
+
+  <footer>
+    <p>PawAid — CISC 3140, Brooklyn College 2026</p>
+  </footer>
+
+  <!-- Load app.js LAST so all HTML exists before JS runs -->
+  <script src="app.js"></script>
+
+</body>
 </html>
