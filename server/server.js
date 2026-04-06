@@ -1,4 +1,5 @@
-require("dotenv").config({ path: __dirname + "/.env" });
+require("dotenv").config({path: require("path").join(__dirname,"../.env")});
+
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -18,7 +19,7 @@ app.get("/api", (req, res) => {
   res.json({ message: "PawCare API is running!" });
 });
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose
