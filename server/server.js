@@ -1,5 +1,4 @@
-require("dotenv").config({path: require("path").join(__dirname,"../.env")});
-
+require("dotenv").config({ path: require("path").join(__dirname, "../.env") });
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -16,10 +15,16 @@ const vetRoutes = require("./routes/vets");
 app.use("/api/vets", vetRoutes);
 
 app.get("/api", (req, res) => {
-  res.json({ message: "PawCare API is running!" });
+  res.json({ message: "PawAid API is running!" });
 });
 
-const PORT = process.env.PORT || 5000;
+// This line is important for deployment —
+// any URL that isn't an API route serves your index.html
+app.get("*splat", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/index.html"));
+});
+
+const PORT = process.env.PORT || 5001;
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose

@@ -9,7 +9,7 @@
 
 // The base URL of your API
 // This is the only place you need to change it if your port changes
-const API_URL = "http://localhost:5001/api/vets";
+const API_URL = window.location.origin + "/api/vets";
 
 // ---- Grab all the HTML elements we need ----
 // document.getElementById() finds an element by its id="" attribute
