@@ -129,7 +129,7 @@ async function seedDatabase() {
     console.log("\n✅ Done! Now run npm run dev and test your API.");
 
   } catch (error) {
-    console.error("❌ Seeding failed:", error.message);
+    console.error(" Seeding failed:", error.message);
     process.exit(1);
   }
 }

@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
+const os = require("os");
 
 const app = express();
 
@@ -26,13 +27,38 @@ app.get("*splat", (req, res) => {
 
 const PORT = process.env.PORT || 5001;
 const MONGO_URI = process.env.MONGO_URI;
+const HOST = "0.0.0.0";
+
+function getNetworkUrls(port) {
+  const interfaces = os.networkInterfaces();
+  const urls = [];
+
+  for (const entries of Object.values(interfaces)) {
+    if (!entries) continue;
+
+    for (const entry of entries) {
+      const isIpv4 = entry.family === "IPv4" || entry.family === 4;
+      if (isIpv4 && !entry.internal) {
+        urls.push(`http://${entry.address}:${port}`);
+      }
+    }
+  }
+
+  return urls;
+}
 
 mongoose
   .connect(MONGO_URI)
   .then(() => {
     console.log("✅ Connected to MongoDB Atlas");
-    app.listen(PORT, () => {
+    app.listen(PORT, HOST, () => {
       console.log(`🚀 Server running at http://localhost:${PORT}`);
+
+      const networkUrls = getNetworkUrls(PORT);
+      if (networkUrls.length > 0) {
+        console.log("🌐 Network URL(s):");
+        networkUrls.forEach((url) => console.log(`   ${url}`));
+      }
     });
   })
   .catch((error) => {
