@@ -2,7 +2,7 @@
 # PawAid 🐾
 A web app that helps low-income pet owners find affordable or free vet services.
 ## Live App
-👉 👉 https://pawaid.onrender.com
+👉 👉 https://paw-aid.vercel.app/
 ## Screenshots
 ![Top of page](screenshot1.png)
 ![Submit form](screenshot2.png)
