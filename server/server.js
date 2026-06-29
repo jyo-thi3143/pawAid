@@ -7,10 +7,38 @@ const path = require("path");
 const os = require("os");
 
 const app = express();
+const MONGO_URI = process.env.MONGO_URI;
+let mongoConnectionPromise = null;
 
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../client")));
+
+async function connectToDatabase() {
+  if (mongoose.connection.readyState >= 1) return;
+  if (!MONGO_URI) {
+    throw new Error("MONGO_URI environment variable is not set");
+  }
+
+  if (!mongoConnectionPromise) {
+    mongoConnectionPromise = mongoose.connect(MONGO_URI);
+  }
+
+  await mongoConnectionPromise;
+}
+
+app.use("/api", async (req, res, next) => {
+  try {
+    await connectToDatabase();
+    next();
+  } catch (error) {
+    console.error("MongoDB connection failed:", error.message);
+    res.status(500).json({
+      message: "Database connection failed",
+      error: error.message,
+    });
+  }
+});
 
 const vetRoutes = require("./routes/vets");
 app.use("/api/vets", vetRoutes);
@@ -26,7 +54,6 @@ app.get("*splat", (req, res) => {
 });
 
 const PORT = process.env.PORT || 5001;
-const MONGO_URI = process.env.MONGO_URI;
 const HOST = "0.0.0.0";
 
 function getNetworkUrls(port) {
@@ -47,21 +74,16 @@ function getNetworkUrls(port) {
   return urls;
 }
 
-mongoose
-  .connect(MONGO_URI)
-  .then(() => {
-    console.log("✅ Connected to MongoDB Atlas");
-    app.listen(PORT, HOST, () => {
-      console.log(`🚀 Server running at http://localhost:${PORT}`);
+if (require.main === module) {
+  app.listen(PORT, HOST, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
 
-      const networkUrls = getNetworkUrls(PORT);
-      if (networkUrls.length > 0) {
-        console.log("🌐 Network URL(s):");
-        networkUrls.forEach((url) => console.log(`   ${url}`));
-      }
-    });
-  })
-  .catch((error) => {
-    console.error("❌ MongoDB connection failed:", error.message);
-    process.exit(1);
+    const networkUrls = getNetworkUrls(PORT);
+    if (networkUrls.length > 0) {
+      console.log("Network URL(s):");
+      networkUrls.forEach((url) => console.log(`   ${url}`));
+    }
   });
+}
+
+module.exports = app;
