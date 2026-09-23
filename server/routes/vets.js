@@ -26,7 +26,27 @@ router.get("/pending", async(req, res) => {
 });
   
   
+router.put("/:id/approve", async (req,res) => {
+  try{
+    const updatedVet=await Vet.findByIdAndUpdate(
+      req.params.id,
+      {isApproved: true},
+      {new: true, runValidators: true}    
+    );
 
+    if(!updatedVet){
+      return res.status(404).json({message: "Vet listing not found" });
+    }
+    res.status(200).json(updatedVet);
+  }catch(error){
+    res.status(500).json({
+      message: "Server error",
+      error : error.message
+    });
+  }
+  
+
+});
 
 router.get("/:id", async (req, res) => {
   try {
