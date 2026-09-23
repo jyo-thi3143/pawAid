@@ -12,6 +12,7 @@ const vetSchema = new mongoose.Schema(
     services:  { type: [String], enum: ["vaccines", "spay", "neuter", "checkup", "dental", "emergency"], required: true },
     isFree:    { type: Boolean, default: false },
     notes:     { type: String, trim: true, default: "", maxlength: 500 },
+    location:  { type: {type: String, enum: ["Point"]},coordinates: {type: [Number]}},
     isApproved:{ type: Boolean, default: false },
   },
   { timestamps: true }
