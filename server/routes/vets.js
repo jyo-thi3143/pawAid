@@ -15,6 +15,19 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/pending", async(req, res) => {
+  try {
+    const vets = await Vet.find({isApproved: false}).sort({createdAt: -1});
+
+    res.status(200).json(vets);
+  }catch (error){
+    res.status(500).json({message: " Server error", error: error.message});
+  }
+});
+  
+  
+
+
 router.get("/:id", async (req, res) => {
   try {
     const vet = await Vet.findById(req.params.id);
