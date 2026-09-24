@@ -14,8 +14,9 @@ const vetSchema = new mongoose.Schema(
     notes:     { type: String, trim: true, default: "", maxlength: 500 },
     location:  { type: {type: String, enum: ["Point"]},coordinates: {type: [Number]}},
     isApproved:{ type: Boolean, default: false },
+    confirmations: {type: Number, default: 0},
   },
   { timestamps: true }
 );
-
+vetSchema.index({ location: "2dsphere" });
 module.exports = mongoose.model("Vet", vetSchema);
