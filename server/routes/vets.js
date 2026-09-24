@@ -60,11 +60,33 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
+    const { name, address, city, state, zip } = req.body;
+
+    // Check if this vet listing already exists
+    const existingVet = await Vet.findOne({
+      name: name,
+      address: address,
+      city: city,
+      state: state,
+      zip: zip
+    });
+
+    if (existingVet) {
+      return res.status(409).json({
+        message: "A veterinary listing with this name and address already exists."
+      });
+    }
+
+    // Create the new listing
     const newVet = new Vet(req.body);
     const savedVet = await newVet.save();
+
     res.status(201).json(savedVet);
   } catch (error) {
-    res.status(400).json({ message: "Validation error", error: error.message });
+    res.status(400).json({
+      message: "Validation error",
+      error: error.message
+    });
   }
 });
 
