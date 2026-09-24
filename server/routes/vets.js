@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Vet = require("../models/Vet");
+const CommunityReport = require("../models/CommunityReport");
 
 // ============================================================
 // GET /api/vets
@@ -89,6 +90,67 @@ router.put("/:id/approve", async (req, res) => {
     });
   }
 });
+
+
+// To confirm that a vet listing is still accurate
+router.put("/:id/confirm", async (req, res) => {
+  try {
+    const updatedVet = await Vet.findByIdAndUpdate(
+      req.params.id,
+      { $inc: { confirmations: 1 } },    // Take the current confirmation number and increase it by 1
+      { new: true }
+    );
+
+    if (!updatedVet) {
+      return res.status(404).json({
+        message: "Vet listing not found"
+      });
+    }
+
+    res.status(200).json(updatedVet);
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+      error: error.message
+    });
+  }
+});
+
+// Submit a community report for a vet listing
+router.post("/:id/report", async (req, res) => {
+  try {
+    const { reason, details } = req.body;
+
+    // Make sure the vet exists
+    const vet = await Vet.findById(req.params.id);
+
+    if (!vet) {
+      return res.status(404).json({
+        message: "Vet listing not found"
+      });
+    }
+
+    // Create the community report
+    const report = await CommunityReport.create({
+      vet: req.params.id,
+      reason: reason,
+      details: details || ""
+    });
+
+    res.status(201).json({
+      message: "Thank you for helping keep PawAid accurate!",
+      report
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+      error: error.message
+    });
+  }
+});
+
 
 // ============================================================
 // GET /api/vets/:id

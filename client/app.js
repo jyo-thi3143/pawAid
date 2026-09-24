@@ -58,19 +58,18 @@ async function fetchVets(zip = "", service = "") {
 // Takes an array of vet objects and builds HTML cards
 // ============================================================
 function displayVets(vets) {
-  // If no vets came back, show a message
   if (vets.length === 0) {
-    vetContainer.innerHTML = "<p>No listings found. Try a different search.</p>";
-    return; // stop the function here
+    vetContainer.innerHTML =
+      "<p>No listings found. Try a different search.</p>";
+    return;
   }
 
-  // .map() loops through every vet and turns it into an HTML string
-  // Then .join("") glues all those strings together into one big string
   const html = vets.map(vet => `
     <div class="vet-card">
 
       <div class="card-header">
         <h3>${vet.name}</h3>
+
         ${vet.isFree
           ? '<span class="badge free">FREE</span>'
           : '<span class="badge affordable">Affordable</span>'
@@ -84,12 +83,19 @@ function displayVets(vets) {
       <p class="phone">📞 ${vet.phone}</p>
 
       ${vet.website
-        ? `<p><a href="${vet.website}" target="_blank">🌐 Visit Website</a></p>`
+        ? `<p>
+             <a href="${vet.website}" target="_blank">
+               🌐 Visit Website
+             </a>
+           </p>`
         : ""
       }
 
       <div class="services">
-        ${vet.services.map(s => `<span class="service-tag">${s}</span>`).join("")}
+        ${vet.services
+          .map(s => `<span class="service-tag">${s}</span>`)
+          .join("")
+        }
       </div>
 
       ${vet.notes
@@ -97,11 +103,243 @@ function displayVets(vets) {
         : ""
       }
 
+      <!-- Community Trust -->
+      <div class="trust-section">
+
+        <p class="confirmation-count">
+          ✅ ${vet.confirmations || 0}
+          people confirmed this information
+        </p>
+
+        <div class="trust-buttons">
+         <span class="trust-icon-wrapper">
+
+          <button
+            class="trust-button"
+            onclick="confirmVet('${vet._id}')"
+            title="Still accurate"
+            aria-label="Still accurate"
+          >
+            👍
+          </button>
+          <span class="tooltip">Still accurate</span>
+        </span>
+
+        <span class="trust-icon-wrapper">
+          <button
+            class="trust-button"
+            onclick="showReportForm('${vet._id}')"
+            title="Report outdated information"
+            aria-label="Report outdated information"
+          >
+            👎
+          </button>
+
+          <span class="tooltip">Report outdated information</span>
+        </span>
+
+        </div>
+
+        <!-- Hidden report form -->
+        <div
+          id="report-form-${vet._id}"
+          class="report-form"
+          style="display: none;"
+        >
+
+          <p>
+            <strong>What is wrong with this listing?</strong>
+          </p>
+
+          <label>
+            <input
+              type="radio"
+              name="reason-${vet._id}"
+              value="phone"
+            >
+            Phone number is incorrect
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              name="reason-${vet._id}"
+              value="address"
+            >
+            Address is incorrect
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              name="reason-${vet._id}"
+              value="website"
+            >
+            Website is incorrect
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              name="reason-${vet._id}"
+              value="services"
+            >
+            Service information is incorrect
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              name="reason-${vet._id}"
+              value="closed"
+            >
+            Clinic may be closed
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              name="reason-${vet._id}"
+              value="other"
+            >
+            Other
+          </label>
+
+          <textarea
+            id="details-${vet._id}"
+            placeholder="Optional details..."
+          ></textarea>
+
+          <button onclick="submitReport('${vet._id}')">
+            Submit Report
+          </button>
+
+          <button onclick="hideReportForm('${vet._id}')">
+            Cancel
+          </button>
+
+        </div>
+
+      </div>
+
     </div>
   `).join("");
 
-  // Inject all the cards into the page
   vetContainer.innerHTML = html;
+}
+
+// Confirm that a vet listing is still accurate
+async function confirmVet(id) {
+  try {
+    const response = await fetch(`/api/vets/${id}/confirm`, {
+      method: "PUT"
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to confirm listing");
+    }
+
+    alert("✅ Thank you for helping keep PawAid accurate!");
+
+    // Refresh the listings so the new count appears
+    fetchVets(
+      zipInput.value.trim(),
+      serviceSelect.value
+    );
+
+  } catch (error) {
+    alert("❌ Could not confirm this listing.");
+  }
+}
+// Show the report form
+function showReportForm(id) {
+  const form = document.getElementById(`report-form-${id}`);
+
+  if (form) {
+    form.style.display = "block";
+  }
+}
+
+
+// Hide the report form
+function hideReportForm(id) {
+  const form = document.getElementById(`report-form-${id}`);
+
+  if (form) {
+    form.style.display = "none";
+  }
+}
+
+
+// Submit a community report
+async function submitReport(id) {
+  try {
+
+    // Find the selected reason
+    const selectedReason = document.querySelector(
+      `input[name="reason-${id}"]:checked`
+    );
+
+    if (!selectedReason) {
+      alert("Please select a reason for your report.");
+      return;
+    }
+
+
+    // Get optional details
+    const detailsInput = document.getElementById(
+      `details-${id}`
+    );
+
+    const details = detailsInput
+      ? detailsInput.value.trim()
+      : "";
+
+
+    // Send report to backend
+    const response = await fetch(
+      `/api/vets/${id}/report`,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          reason: selectedReason.value,
+          details: details
+        })
+      }
+    );
+
+
+    if (!response.ok) {
+      const error = await response.json();
+
+      throw new Error(
+        error.message || "Failed to submit report"
+      );
+    }
+
+
+    alert(
+      "✅ Thank you! Your report has been submitted."
+    );
+
+
+    // Hide the report form
+    hideReportForm(id);
+
+
+  } catch (error) {
+
+    alert(
+      "❌ Could not submit report: " +
+      error.message
+    );
+
+  }
 }
 
 
