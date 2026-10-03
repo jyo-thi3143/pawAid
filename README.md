@@ -32,28 +32,32 @@ These tools were selected because they support the project's frontend, REST API,
 ## How to Run
 
 1. Clone the repository.
+
 2. Install the dependencies:
 
    ```bash
    npm install
-    ```
+   ```
+
 3. Create a `.env` file in the project root and add your MongoDB connection string:
 
    ```env
    MONGO_URI=your_mongodb_connection_string
-    ```
-Replace the placeholder with your own MongoDB connection string.
+   ```
 
-**Note:** Do not share or commit your `.env` file because it contains private credentials.
+   Replace the placeholder with your own MongoDB connection string.
+
+   **Note:** Do not share or commit your `.env` file because it contains private credentials.
 
 4. Start the development server:
-    ```bash
-    npm run dev
-   
-   ```markdown
+
+   ```bash
+   npm run dev
+   ```
+
 5. Visit:
 
-    ` http://localhost:5001
+   `http://localhost:5001`
 
 ## API Routes
 | Method | URL | What it does |
