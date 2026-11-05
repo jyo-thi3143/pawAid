@@ -21,6 +21,35 @@ const clearBtn        = document.getElementById("clear-btn");
 const submitForm      = document.getElementById("submit-form");
 const formMessage     = document.getElementById("form-message");
 
+// ============================================================
+// NAVIGATION — Switch between PawAid views
+// ============================================================
+
+// Get all navigation links and page sections
+const navLinks = document.querySelectorAll(".nav-links a");
+const pageSections = document.querySelectorAll(".page-section");
+
+// Show the selected page section
+function showPage(pageId) {
+  pageSections.forEach(section => {
+    section.classList.toggle(
+      "active-section",
+      section.id === pageId
+    );
+  });
+}
+
+// Handle navigation clicks
+navLinks.forEach(link => {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const pageId = link.getAttribute("href").substring(1);
+
+    showPage(pageId);
+  });
+});
+
 
 // ============================================================
 // FUNCTION 1 — fetchVets(zip, service)

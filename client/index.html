@@ -10,91 +10,227 @@
 
 <body>
 
-  <!-- HEADER -->
-  <header>
+  <!-- Main navigation for moving between PawAid views -->
+  <nav class="navbar">
+    <a href="#home" class="logo">PawAid</a>
+
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#find-vet">Find a Vet</a>
+      <a href="#submit-clinic">Submit a Clinic</a>
+    </div>
+  </nav>
+
+
+  <!-- Home view introducing the PawAid application -->
+  <header id="home" class="page-section active-section">
+
     <div class="hero">
       <div class="hero-copy">
-        <h1><span class="paw-icon" aria-hidden="true">🐾</span> PawAid</h1>
-        <p>Free and affordable vet services for low-income pet owners in NYC</p>
+        <h1>
+          <span class="paw-icon" aria-hidden="true">🐾</span>
+          PawAid
+        </h1>
+
+        <p>
+          Free and affordable vet services for low-income pet owners in NYC
+        </p>
       </div>
 
       <div class="hero-visual">
         <div class="hero-photo-wrap">
-          <img src="cat-hero.jpg" alt="A curious calico cat" class="hero-photo" />
+          <img
+            src="cat-hero.jpg"
+            alt="A curious calico cat"
+            class="hero-photo"
+          />
         </div>
       </div>
     </div>
+
   </header>
 
-  <!-- SEARCH AND FILTER BAR -->
-  <section class="filters">
-    <input
-      type="text"
-      id="zip-input"
-      placeholder="Search by zip code..."
-    />
-    <select id="service-select">
-      <option value="">All services</option>
-      <option value="vaccines">Vaccines</option>
-      <option value="spay">Spay</option>
-      <option value="neuter">Neuter</option>
-      <option value="checkup">Checkup</option>
-      <option value="dental">Dental</option>
-      <option value="emergency">Emergency</option>
-    </select>
-    <button id="search-btn">Search</button>
-    <button id="clear-btn">Clear</button>
-  </section>
 
-  <!-- VET LISTINGS -->
-  <section class="listings">
-    <div id="vet-container">
-      <!-- Vet cards will be injected here by app.js -->
-      <p id="loading-msg">Loading listings...</p>
+  <!-- Find a Vet view containing search filters and veterinary listings -->
+  <section id="find-vet" class="page-section">
+
+    <!-- Search and filter section for finding affordable veterinary services -->
+    <div class="filters">
+
+      <input
+        type="text"
+        id="zip-input"
+        placeholder="Search by zip code..."
+      />
+
+      <select id="service-select">
+        <option value="">All services</option>
+        <option value="vaccines">Vaccines</option>
+        <option value="spay">Spay</option>
+        <option value="neuter">Neuter</option>
+        <option value="checkup">Checkup</option>
+        <option value="dental">Dental</option>
+        <option value="emergency">Emergency</option>
+      </select>
+
+      <button id="search-btn">Search</button>
+      <button id="clear-btn">Clear</button>
+
     </div>
-  </section>
 
-  <!-- SUBMIT A NEW LISTING FORM -->
-  <section class="submit-section">
-    <h2>Know a clinic we missed?</h2>
-    <p>Submit it here and we'll review it.</p>
 
-    <form id="submit-form">
-      <input type="text"     id="name"    placeholder="Clinic name *"    required />
-      <input type="text"     id="address" placeholder="Address *"        required />
-      <input type="text"     id="city"    placeholder="City *"           required />
-      <input type="text"     id="state"   placeholder="State (e.g. NY) *" required maxlength="2" />
-      <input type="text"     id="zip"     placeholder="ZIP code *"       required />
-      <input type="tel"      id="phone"   placeholder="Phone number *"   required />
-      <input type="url"      id="website" placeholder="Website (optional)" />
-      <input type="text"     id="notes"   placeholder="Notes (optional)" />
+    <!-- Vet listings displayed based on the user's search and filter choices -->
+    <div class="listings">
 
-      <label class="services-label">Services offered:</label>
-      <div class="checkbox-group">
-        <label><input type="checkbox" value="vaccines"  /> Vaccines</label>
-        <label><input type="checkbox" value="spay"      /> Spay</label>
-        <label><input type="checkbox" value="neuter"    /> Neuter</label>
-        <label><input type="checkbox" value="checkup"   /> Checkup</label>
-        <label><input type="checkbox" value="dental"    /> Dental</label>
-        <label><input type="checkbox" value="emergency" /> Emergency</label>
+      <div id="vet-container">
+
+        <!-- Vet cards will be injected here by app.js -->
+        <p id="loading-msg">Loading listings...</p>
+
       </div>
 
-      <label class="free-label">
-        <input type="checkbox" id="isFree" />
-        This clinic offers FREE services
-      </label>
+    </div>
 
-      <button type="submit">Submit Listing</button>
-    </form>
-
-    <p id="form-message"></p>
   </section>
 
+
+  <!-- Clinic submission view for adding a new veterinary listing -->
+  <section id="submit-clinic" class="page-section submit-section">
+
+    <h2>Know a clinic we missed?</h2>
+
+    <p>Submit it here and we'll review it.</p>
+
+
+    <form id="submit-form">
+
+      <input
+        type="text"
+        id="name"
+        placeholder="Clinic name *"
+        required
+      />
+
+      <input
+        type="text"
+        id="address"
+        placeholder="Address *"
+        required
+      />
+
+      <input
+        type="text"
+        id="city"
+        placeholder="City *"
+        required
+      />
+
+      <input
+        type="text"
+        id="state"
+        placeholder="State (e.g. NY) *"
+        required
+        maxlength="2"
+      />
+
+      <input
+        type="text"
+        id="zip"
+        placeholder="ZIP code *"
+        required
+      />
+
+      <input
+        type="tel"
+        id="phone"
+        placeholder="Phone number *"
+        required
+      />
+
+      <input
+        type="url"
+        id="website"
+        placeholder="Website (optional)"
+      />
+
+      <input
+        type="text"
+        id="notes"
+        placeholder="Notes (optional)"
+      />
+
+
+      <label class="services-label">
+        Services offered:
+      </label>
+
+
+      <div class="checkbox-group">
+
+        <label>
+          <input type="checkbox" value="vaccines" />
+          Vaccines
+        </label>
+
+        <label>
+          <input type="checkbox" value="spay" />
+          Spay
+        </label>
+
+        <label>
+          <input type="checkbox" value="neuter" />
+          Neuter
+        </label>
+
+        <label>
+          <input type="checkbox" value="checkup" />
+          Checkup
+        </label>
+
+        <label>
+          <input type="checkbox" value="dental" />
+          Dental
+        </label>
+
+        <label>
+          <input type="checkbox" value="emergency" />
+          Emergency
+        </label>
+
+      </div>
+
+
+      <label class="free-label">
+
+        <input
+          type="checkbox"
+          id="isFree"
+        />
+
+        This clinic offers FREE services
+
+      </label>
+
+
+      <button type="submit">
+        Submit Listing
+      </button>
+
+    </form>
+
+
+    <p id="form-message"></p>
+
+  </section>
+
+
+  <!-- Footer shared across the PawAid application -->
   <footer>
     <p>PawAid - CISC 4900, Brooklyn College 2026</p>
   </footer>
 
-  <!-- Load app.js LAST so all HTML exists before JS runs -->
+
+  <!-- Load app.js after the HTML so all page elements are available -->
   <script src="app.js"></script>
 
 </body>
