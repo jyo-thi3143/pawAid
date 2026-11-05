@@ -2,6 +2,62 @@
    style.css — PawAid
    ============================================================ */
 
+/* ============================================================
+   Main Navigation
+   ============================================================ */
+
+.navbar {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 20px 30px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: #e87c9b;
+}
+
+
+/* ============================================================
+   Page Navigation
+   Shows only the currently selected PawAid view.
+   ============================================================ */
+
+.page-section {
+  display: none;
+}
+
+.page-section.active-section {
+  display: block;
+}
+
+
+/* ============================================================
+   Root Variables
+   ============================================================ */
+
 :root {
   --bg: #f4faf7;
   --bg-soft: #fcfffd;
@@ -16,6 +72,11 @@
   --accent-soft: #fff1f4;
   --shadow: 0 18px 45px rgba(39, 77, 63, 0.12);
 }
+
+
+/* ============================================================
+   General Page Styling
+   ============================================================ */
 
 * {
   margin: 0;
@@ -33,6 +94,11 @@ body {
     linear-gradient(180deg, #f2fbf6 0%, #f7fcfa 44%, #fcfefd 100%);
   min-height: 100vh;
 }
+
+
+/* ============================================================
+   Home / Hero Section
+   ============================================================ */
 
 header {
   padding: 2rem 1.25rem 1rem;
@@ -90,7 +156,11 @@ header p {
   content: "";
   position: absolute;
   inset: 28px 8px 16px 24px;
-  background: linear-gradient(135deg, rgba(184, 229, 210, 0.55), rgba(255, 230, 234, 0.42));
+  background: linear-gradient(
+    135deg,
+    rgba(184, 229, 210, 0.55),
+    rgba(255, 230, 234, 0.42)
+  );
   border-radius: 42% 58% 57% 43% / 41% 39% 61% 59%;
   filter: blur(2px);
 }
@@ -124,8 +194,17 @@ header p {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0) 42%, rgba(242, 251, 246, 0.34) 72%, rgba(242, 251, 246, 0.82) 100%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.18));
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 42%,
+      rgba(242, 251, 246, 0.34) 72%,
+      rgba(242, 251, 246, 0.82) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.18)
+    );
   pointer-events: none;
 }
 
@@ -137,6 +216,11 @@ header p {
   object-position: 24% 20%;
   transform: scale(1.14);
 }
+
+
+/* ============================================================
+   Search and Filter Section
+   ============================================================ */
 
 .filters {
   max-width: 1180px;
@@ -164,7 +248,10 @@ header p {
   min-width: 170px;
   outline: none;
   color: var(--text);
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
 }
 
 .filters input:focus,
@@ -182,7 +269,10 @@ header p {
   font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
-  transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+  transition:
+    transform 0.18s,
+    box-shadow 0.18s,
+    background 0.18s;
 }
 
 .filters button:hover,
@@ -192,14 +282,22 @@ header p {
 
 #search-btn,
 .submit-section button[type="submit"] {
-  background: linear-gradient(135deg, var(--brand) 0%, #3b9b73 100%);
+  background: linear-gradient(
+    135deg,
+    var(--brand) 0%,
+    #3b9b73 100%
+  );
   color: white;
   box-shadow: 0 12px 24px rgba(47, 125, 92, 0.22);
 }
 
 #search-btn:hover,
 .submit-section button[type="submit"]:hover {
-  background: linear-gradient(135deg, var(--brand-deep) 0%, #2f7d5c 100%);
+  background: linear-gradient(
+    135deg,
+    var(--brand-deep) 0%,
+    #2f7d5c 100%
+  );
 }
 
 #clear-btn {
@@ -211,6 +309,11 @@ header p {
   background: #e8dbc9;
 }
 
+
+/* ============================================================
+   Vet Listings
+   ============================================================ */
+
 .listings {
   max-width: 1180px;
   margin: 2.2rem auto;
@@ -219,7 +322,10 @@ header p {
 
 #vet-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(290px, 1fr)
+  );
   gap: 1.5rem;
 }
 
@@ -237,7 +343,10 @@ header p {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s;
 }
 
 .vet-card:hover {
@@ -319,6 +428,11 @@ header p {
   margin-top: 0.2rem;
 }
 
+
+/* ============================================================
+   Submit Clinic Section
+   ============================================================ */
+
 .submit-section {
   max-width: 760px;
   margin: 3rem auto;
@@ -354,7 +468,9 @@ header p {
   background: rgba(255, 255, 255, 0.92);
   font-size: 0.96rem;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .services-label {
@@ -414,6 +530,11 @@ header p {
   font-size: 0.95rem;
 }
 
+
+/* ============================================================
+   Footer
+   ============================================================ */
+
 footer {
   padding: 1rem 1.25rem 2.5rem;
   text-align: center;
@@ -421,7 +542,13 @@ footer {
   font-size: 0.9rem;
 }
 
+
+/* ============================================================
+   Tablet Layout
+   ============================================================ */
+
 @media (max-width: 900px) {
+
   .hero {
     grid-template-columns: 1fr;
   }
@@ -431,9 +558,32 @@ footer {
     min-height: 300px;
     padding-right: 0;
   }
+
 }
 
+
+/* ============================================================
+   Mobile Layout
+   ============================================================ */
+
 @media (max-width: 640px) {
+
+  .navbar {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .nav-links {
+    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-links a {
+    font-size: 0.9rem;
+  }
+
   header {
     padding: 1.25rem 1rem 0.5rem;
   }
@@ -464,4 +614,63 @@ footer {
   .hero-visual {
     min-height: 260px;
   }
+
+}
+
+
+/* ============================================================
+   Community Trust Buttons
+   ============================================================ */
+
+.trust-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.trust-icon-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.trust-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.trust-button:hover {
+  transform: scale(1.15);
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 135%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: #333;
+  color: white;
+
+  padding: 6px 9px;
+  border-radius: 5px;
+
+  font-size: 12px;
+  white-space: nowrap;
+
+  opacity: 0;
+  visibility: hidden;
+
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.trust-icon-wrapper:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
 }
