@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Vet = require("../models/Vet");
 const CommunityReport = require("../models/CommunityReport");
-
+const {requireAdmin} = require("../admin");
 // ============================================================
 // GET /api/vets
 // Get approved vet listings
@@ -32,7 +32,7 @@ router.get("/", async (req, res) => {
 // GET /api/vets/pending
 // Get listings waiting for admin approval
 // ============================================================
-router.get("/pending", async (req, res) => {
+router.get("/pending", requireAdmin, async (req, res) => {
   try {
     const vets = await Vet.find({ isApproved: false })
       .sort({ createdAt: -1 });
@@ -50,7 +50,7 @@ router.get("/pending", async (req, res) => {
 // GET /api/vets/approved
 // Get all approved listings for the admin portal
 // ============================================================
-router.get("/approved", async (req, res) => {
+router.get("/approved",requireAdmin, async (req, res) => {
   try {
     const vets = await Vet.find({ isApproved: true })
       .sort({ createdAt: -1 });
@@ -68,7 +68,7 @@ router.get("/approved", async (req, res) => {
 // PUT /api/vets/:id/approve
 // Approve a pending vet listing
 // ============================================================
-router.put("/:id/approve", async (req, res) => {
+router.put("/:id/approve", requireAdmin, async (req, res) => {
   try {
     const updatedVet = await Vet.findByIdAndUpdate(
       req.params.id,
@@ -225,7 +225,7 @@ router.post("/", async (req, res) => {
 // PUT /api/vets/:id
 // Update an existing vet listing
 // ============================================================
-router.put("/:id", async (req, res) => {
+router.put("/:id",requireAdmin, async (req, res) => {
   try {
     const updatedVet = await Vet.findByIdAndUpdate(
       req.params.id,
@@ -255,7 +255,7 @@ router.put("/:id", async (req, res) => {
 // DELETE /api/vets/:id
 // Delete a vet listing
 // ============================================================
-router.delete("/:id", async (req, res) => {
+router.delete("/:id",requireAdmin, async (req, res) => {
   try {
     const deletedVet = await Vet.findByIdAndDelete(req.params.id);
 

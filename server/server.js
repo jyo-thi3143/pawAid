@@ -40,6 +40,9 @@ app.use("/api", async (req, res, next) => {
   }
 });
 
+const { router: adminRoutes} = require("./admin");
+app.use("/api/admin", adminRoutes);
+
 const vetRoutes = require("./routes/vets");
 app.use("/api/vets", vetRoutes);
 
