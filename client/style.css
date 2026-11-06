@@ -674,3 +674,38 @@ footer {
   opacity: 1;
   visibility: visible;
 }
+
+/* Accessibility: remove the browser's default fieldset border */
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+fieldset legend {
+  padding: 0;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Accessibility: make keyboard focus clearly visible */
+:focus-visible {
+  outline: 3px solid #1f6f54;
+  outline-offset: 3px;
+}
+
+/* Keep the focus indicator visible on form fields */
+input:focus-visible {
+  border-color: #1f6f54;
+  outline: 3px solid rgba(31, 111, 84, 0.25);
+  outline-offset: 2px;
+}
+
+/* Make buttons and navigation links easy to see when focused */
+button:focus-visible,
+.nav-links a:focus-visible,
+.logo:focus-visible {
+  outline: 3px solid #1f6f54;
+  outline-offset: 4px;
+}

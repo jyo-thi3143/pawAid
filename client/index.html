@@ -104,119 +104,126 @@
 
     <form id="submit-form">
 
-      <input
-        type="text"
-        id="name"
-        placeholder="Clinic name *"
-        required
-      />
+  <label for="name">Clinic name *</label>
+  <input
+    type="text"
+    id="name"
+    placeholder="Enter clinic name"
+    required
+  />
 
-      <input
-        type="text"
-        id="address"
-        placeholder="Address *"
-        required
-      />
+  <label for="address">Address *</label>
+  <input
+    type="text"
+    id="address"
+    placeholder="Enter street address"
+    required
+  />
 
-      <input
-        type="text"
-        id="city"
-        placeholder="City *"
-        required
-      />
+  <label for="city">City *</label>
+  <input
+    type="text"
+    id="city"
+    placeholder="Enter city"
+    required
+  />
 
-      <input
-        type="text"
-        id="state"
-        placeholder="State (e.g. NY) *"
-        required
-        maxlength="2"
-      />
+  <label for="state">State *</label>
+  <input
+    type="text"
+    id="state"
+    placeholder="e.g. NY"
+    required
+    maxlength="2"
+  />
 
-      <input
-        type="text"
-        id="zip"
-        placeholder="ZIP code *"
-        required
-      />
+  <label for="zip">ZIP code *</label>
+  <input
+    type="text"
+    id="zip"
+    placeholder="Enter ZIP code"
+    required
+  />
 
-      <input
-        type="tel"
-        id="phone"
-        placeholder="Phone number *"
-        required
-      />
+  <label for="phone">Phone number *</label>
+  <input
+    type="tel"
+    id="phone"
+    placeholder="Enter phone number"
+    required
+  />
 
-      <input
-        type="url"
-        id="website"
-        placeholder="Website (optional)"
-      />
+  <label for="website">Website (optional)</label>
+  <input
+    type="url"
+    id="website"
+    placeholder="https://example.com"
+  />
 
-      <input
-        type="text"
-        id="notes"
-        placeholder="Notes (optional)"
-      />
+  <label for="notes">Notes (optional)</label>
+  <input
+    type="text"
+    id="notes"
+    placeholder="Additional information"
+  />
 
 
-      <label class="services-label">
-        Services offered:
+  <fieldset>
+    <legend>Services offered:</legend>
+
+    <div class="checkbox-group">
+
+      <label>
+        <input type="checkbox" value="vaccines" />
+        Vaccines
       </label>
 
-
-      <div class="checkbox-group">
-
-        <label>
-          <input type="checkbox" value="vaccines" />
-          Vaccines
-        </label>
-
-        <label>
-          <input type="checkbox" value="spay" />
-          Spay
-        </label>
-
-        <label>
-          <input type="checkbox" value="neuter" />
-          Neuter
-        </label>
-
-        <label>
-          <input type="checkbox" value="checkup" />
-          Checkup
-        </label>
-
-        <label>
-          <input type="checkbox" value="dental" />
-          Dental
-        </label>
-
-        <label>
-          <input type="checkbox" value="emergency" />
-          Emergency
-        </label>
-
-      </div>
-
-
-      <label class="free-label">
-
-        <input
-          type="checkbox"
-          id="isFree"
-        />
-
-        This clinic offers FREE services
-
+      <label>
+        <input type="checkbox" value="spay" />
+        Spay
       </label>
 
+      <label>
+        <input type="checkbox" value="neuter" />
+        Neuter
+      </label>
 
-      <button type="submit">
-        Submit Listing
-      </button>
+      <label>
+        <input type="checkbox" value="checkup" />
+        Checkup
+      </label>
 
-    </form>
+      <label>
+        <input type="checkbox" value="dental" />
+        Dental
+      </label>
+
+      <label>
+        <input type="checkbox" value="emergency" />
+        Emergency
+      </label>
+
+    </div>
+  </fieldset>
+
+
+  <label class="free-label">
+
+    <input
+      type="checkbox"
+      id="isFree"
+    />
+
+    This clinic offers FREE services
+
+  </label>
+
+
+  <button type="submit">
+    Submit Listing
+  </button>
+
+</form>
 
 
     <p id="form-message"></p>
