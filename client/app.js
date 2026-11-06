@@ -25,7 +25,6 @@ const formMessage     = document.getElementById("form-message");
 // NAVIGATION — Switch between PawAid views
 // ============================================================
 
-// Get all navigation links and page sections
 const navLinks = document.querySelectorAll(".nav-links a");
 const pageSections = document.querySelectorAll(".page-section");
 
@@ -46,9 +45,20 @@ navLinks.forEach(link => {
 
     const pageId = link.getAttribute("href").substring(1);
 
+    // Show the selected page
     showPage(pageId);
+
+    // Tell assistive technology which page is currently active
+    navLinks.forEach(navLink => {
+      navLink.removeAttribute("aria-current");
+    });
+
+    link.setAttribute("aria-current", "page");
   });
 });
+
+// Home is the default page when the app first loads
+navLinks[0].setAttribute("aria-current", "page");
 
 
 // ============================================================
