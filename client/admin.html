@@ -3,39 +3,479 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PawAid Admin Review</title>
+
+  <title>PawAid Admin</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <header>
-    <h1>🐾 PawAid Admin Review</h1>
-    <p>Review and manage veterinary listings.</p>
-  </header>
+  <!-- =========================
+       ADMIN LOGIN
+  ========================== -->
 
   <main>
 
-    <!-- Pending Listings -->
-    <section>
-      <h2>Pending Listings</h2>
+    <section id="login-section">
 
-      <div id="pending-container">
-        <p>Loading pending listings...</p>
+      <div class="login-box">
+
+        <h2>Admin Login</h2>
+
+        <form id="login-form">
+
+          <div class="form-group">
+            <label for="username">Username</label>
+
+            <input
+              type="text"
+              id="username"
+              name="username"
+              required
+              autocomplete="username"
+            >
+          </div>
+
+
+          <div class="form-group">
+            <label for="password">Password</label>
+
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              autocomplete="current-password"
+            >
+          </div>
+
+
+          <button type="submit">
+            Log In
+          </button>
+
+
+          <p
+            id="login-message"
+            role="alert"
+          ></p>
+
+        </form>
+
       </div>
+
     </section>
 
 
-    <!-- Approved Listings -->
-    <section>
-      <h2>Approved Listings</h2>
+    <!-- =========================
+         ADMIN DASHBOARD
+    ========================== -->
 
-      <div id="approved-container">
-        <p>Loading approved listings...</p>
+    <section
+      id="admin-dashboard"
+      style="display: none;"
+    >
+
+      <!-- =========================
+           ADMIN NAVIGATION
+      ========================== -->
+
+      <nav
+        class="admin-nav"
+        aria-label="Admin navigation"
+      >
+
+        <button
+          type="button"
+          class="admin-nav-link active"
+          data-page="admin-home"
+        >
+          Home
+        </button>
+
+
+        <button
+          type="button"
+          class="admin-nav-link"
+          data-page="pending-page"
+        >
+          Pending
+        </button>
+
+
+        <button
+          type="button"
+          class="admin-nav-link"
+          data-page="approved-page"
+        >
+          Approved
+        </button>
+
+
+        <button
+          type="button"
+          class="admin-nav-link"
+          data-page="add-listing-page"
+        >
+          Create
+        </button>
+
+
+        <button
+          type="button"
+          class="admin-nav-link"
+          data-page="bin-page"
+          aria-label="Bin"
+          title="Bin"
+
+        >
+          🗑️
+        </button>
+
+
+        <!-- Profile -->
+
+        <div
+          id="profile-menu"
+          class="profile-menu"
+        >
+
+          <button
+            id="profile-button"
+            type="button"
+            aria-expanded="false"
+            aria-controls="profile-dropdown"
+          >
+            <span id="profile-username">admin</span>
+            ▾
+          </button>
+
+
+          <div
+            id="profile-dropdown"
+            class="profile-dropdown"
+          >
+
+            <button
+              id="logout-button"
+              type="button"
+            >
+              Log Out
+            </button>
+
+          </div>
+
+        </div>
+
+      </nav>
+
+
+      <!-- =========================
+           HOME
+      ========================== -->
+
+      <section
+        id="admin-home"
+        class="admin-page active-admin-page"
+      >
+
+        <div class="hero">
+
+          <!-- Hero text -->
+
+          <div class="hero-copy">
+
+            <h1>
+
+              <span class="paw-icon">
+                🐾
+              </span>
+
+              PawAid Admin
+
+            </h1>
+
+
+            <p>
+              Review and manage veterinary listings for PawAid.
+            </p>
+
+          </div>
+
+
+          <!-- Cat image -->
+
+          <div class="hero-visual">
+
+            <div class="hero-photo-wrap">
+
+              <img
+                src="cat-hero.jpg"
+                alt="Cat wearing a protective cone"
+                class="hero-photo"
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           PENDING LISTINGS
+      ========================== -->
+
+      <section
+        id="pending-page"
+        class="admin-page"
+      >
+
+        <div class="admin-content">
+
+          <h2>
+            Pending Listings
+          </h2>
+
+          <p>
+            Review new veterinary listings.
+          </p>
+
+
+          <div id="pending-container">
+            <p>
+              Pending listings will appear here.
+            </p>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           APPROVED LISTINGS
+      ========================== -->
+
+      <section
+        id="approved-page"
+        class="admin-page"
+      >
+
+        <div class="admin-content">
+
+          <h2>
+            Approved Listings
+          </h2>
+
+          <p>
+            View and manage approved listings.
+          </p>
+
+
+          <div id="approved-container">
+            <p>
+              Approved listings will appear here.
+            </p>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           ADD LISTING
+      ========================== -->
+
+   <section
+  id="add-listing-page"
+  class="admin-page submit-section"
+>
+
+  <h2>Create New Listing</h2>
+
+  <p>
+    Add a veterinary clinic directly to PawAid.
+  </p>
+
+  <form id="admin-create-form">
+
+    <label for="admin-name">Clinic name *</label>
+    <input
+      type="text"
+      id="admin-name"
+      placeholder="Enter clinic name"
+      required
+    />
+
+    <label for="admin-address">Address *</label>
+    <input
+      type="text"
+      id="admin-address"
+      placeholder="Enter street address"
+      required
+    />
+
+    <label for="admin-city">City *</label>
+    <input
+      type="text"
+      id="admin-city"
+      placeholder="Enter city"
+      required
+    />
+
+    <label for="admin-state">State *</label>
+    <input
+      type="text"
+      id="admin-state"
+      placeholder="e.g. NY"
+      maxlength="2"
+      required
+    />
+
+    <label for="admin-zip">ZIP code *</label>
+    <input
+      type="text"
+      id="admin-zip"
+      placeholder="Enter ZIP code"
+      required
+    />
+
+    <label for="admin-phone">Phone number *</label>
+    <input
+      type="tel"
+      id="admin-phone"
+      placeholder="Enter phone number"
+      required
+    />
+
+    <label for="admin-website">Website (optional)</label>
+    <input
+      type="url"
+      id="admin-website"
+      placeholder="https://example.com"
+    />
+
+    <label for="admin-notes">Notes (optional)</label>
+    <input
+      type="text"
+      id="admin-notes"
+      placeholder="Additional information"
+    />
+
+    <fieldset>
+      <legend>Services offered:</legend>
+
+      <div class="checkbox-group">
+
+        <label>
+          <input
+            type="checkbox"
+            name="admin-services"
+            value="vaccines"
+          />
+          Vaccines
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="admin-services"
+            value="spay"
+          />
+          Spay
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="admin-services"
+            value="neuter"
+          />
+          Neuter
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="admin-services"
+            value="checkup"
+          />
+          Checkup
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="admin-services"
+            value="dental"
+          />
+          Dental
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="admin-services"
+            value="emergency"
+          />
+          Emergency
+        </label>
+
       </div>
-    </section>
+    </fieldset>
 
-  </main>
+    <label class="free-label">
+
+      <input
+        type="checkbox"
+        id="admin-isFree"
+      />
+
+      This clinic offers FREE services
+
+    </label>
+
+    <button type="submit">
+      Create Listing
+    </button>
+
+  </form>
+
+  <p id="admin-create-message"></p>
+
+</section>
+
+
+<!-- =========================
+     BIN
+========================== -->
+
+<section id="bin-page" class="admin-page">
+
+  <div class="admin-content">
+
+    <h2>Bin</h2>
+
+    <p>Deleted listings can be restored or permanently deleted.</p>
+
+    <div id="bin-container">
+      <p>Deleted listings will appear here.</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+</main>
+
+
+  <!-- Admin JavaScript -->
 
   <script src="admin.js"></script>
 
