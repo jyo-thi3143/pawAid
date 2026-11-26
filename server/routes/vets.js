@@ -12,7 +12,11 @@ router.get("/", async (req, res) => {
   try {
     const { zip, service } = req.query;
 
-    let filter = { isApproved: true };
+    let filter =
+    {
+      isApproved: true,
+      isDeleted: { $ne: true }
+    };
 
     if (zip) filter.zip = zip;
     if (service) filter.services = { $in: [service] };
@@ -34,7 +38,10 @@ router.get("/", async (req, res) => {
 // ============================================================
 router.get("/pending", requireAdmin, async (req, res) => {
   try {
-    const vets = await Vet.find({ isApproved: false })
+    const vets = await Vet.find({
+       isApproved: false,
+       isDeleted: { $ne: true }
+      })
       .sort({ createdAt: -1 });
 
     res.status(200).json(vets);
@@ -52,7 +59,10 @@ router.get("/pending", requireAdmin, async (req, res) => {
 // ============================================================
 router.get("/approved",requireAdmin, async (req, res) => {
   try {
-    const vets = await Vet.find({ isApproved: true })
+    const vets = await Vet.find({
+      isApproved: true,
+      isDeleted: {$ne: true}
+    })
       .sort({ createdAt: -1 });
 
     res.status(200).json(vets);
@@ -150,7 +160,61 @@ router.post("/:id/report", async (req, res) => {
     });
   }
 });
+// ============================================================
+// Get deleted listings for the admin Bin
+// ============================================================
+router.get("/bin", requireAdmin, async (req, res) => {
+  try {
+    const vets = await Vet.find({ isDeleted: true })
+      .sort({ updatedAt: -1 });
 
+    res.status(200).json(vets);
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+      error: error.message
+    });
+  }
+});
+
+// Permanently delete a listing only while it is in the admin Bin.
+router.delete("/:id/permanent", requireAdmin, async (req, res) => {
+  try {
+    const vet = await Vet.findById(req.params.id);
+
+    if (!vet) {
+      return res.status(404).json({
+        message: "Vet listing not found"
+      });
+    }
+
+    if (vet.isDeleted !== true) {
+      return res.status(400).json({
+        message: "Only listings in the Bin can be permanently deleted"
+      });
+    }
+
+    const permanentlyDeletedVet = await Vet.findOneAndDelete({
+      _id: req.params.id,
+      isDeleted: true
+    });
+
+    if (!permanentlyDeletedVet) {
+      return res.status(400).json({
+        message: "Listing is no longer in the Bin"
+      });
+    }
+
+    return res.status(200).json({
+      message: "Listing permanently deleted"
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+      error: error.message
+    });
+  }
+});
 
 // ============================================================
 // GET /api/vets/:id
@@ -251,13 +315,44 @@ router.put("/:id",requireAdmin, async (req, res) => {
   }
 });
 
+// Restore a deleted listing
+router.put("/:id/restore", requireAdmin, async (req, res) => {
+  try {
+    const restoredVet = await Vet.findByIdAndUpdate(
+      req.params.id,
+      { isDeleted: false },
+      { new: true }
+    );
+
+    if (!restoredVet) {
+      return res.status(404).json({
+        message: "Listing not found"
+      });
+    }
+
+    res.status(200).json({
+      message: "Listing restored successfully"
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+      error: error.message
+    });
+  }
+});
+
 // ============================================================
 // DELETE /api/vets/:id
 // Delete a vet listing
 // ============================================================
 router.delete("/:id",requireAdmin, async (req, res) => {
   try {
-    const deletedVet = await Vet.findByIdAndDelete(req.params.id);
+    const deletedVet = await Vet.findByIdAndUpdate(
+      req.params.id,
+      {isDeleted: true},
+      {new: true}
+    );
 
     if (!deletedVet) {
       return res.status(404).json({
@@ -266,7 +361,7 @@ router.delete("/:id",requireAdmin, async (req, res) => {
     }
 
     res.status(200).json({
-      message: "Listing deleted successfully"
+      message: "Listing moved to Bin"
     });
   } catch (error) {
     res.status(500).json({
